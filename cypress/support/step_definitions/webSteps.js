@@ -8,12 +8,12 @@ When("realizar login com usuário válido", () => {
   cy.contains("Signup / Login", { timeout: 20000 }).click();
 
   cy.get('[data-qa="login-email"]', { timeout: 20000 })
-    .should("be.visible")
-    .type("teste2021@teste.com.br");
+  .should("be.visible")
+  .type("ns.lopes96@gmail.com");
 
-  cy.get('[data-qa="login-password"]')
-    .should("be.visible")
-    .type("teste");
+cy.get('[data-qa="login-password"]')
+  .should("be.visible")
+  .type("987654321");
 
   cy.get('[data-qa="login-button"]').click();
 
