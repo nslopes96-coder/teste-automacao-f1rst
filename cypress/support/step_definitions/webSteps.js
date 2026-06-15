@@ -4,8 +4,25 @@ Given("que o usuário acessa o site Automation Exercise", () => {
   cy.visit("https://www.automationexercise.com/");
 });
 
+When("realizar login com usuário válido", () => {
+  cy.contains("Signup / Login", { timeout: 20000 }).click();
+
+  cy.get('[data-qa="login-email"]', { timeout: 20000 })
+    .should("be.visible")
+    .type("teste2021@teste.com.br");
+
+  cy.get('[data-qa="login-password"]')
+    .should("be.visible")
+    .type("teste");
+
+  cy.get('[data-qa="login-button"]').click();
+
+  cy.contains("Logged in as", { timeout: 20000 })
+    .should("be.visible");
+});
+
 When("realizar a busca pelo produto {string}", (produto) => {
-  cy.get('a[href="/products"]', { timeout: 20000 }).click();
+  cy.contains("Products", { timeout: 20000 }).click();
 
   cy.url({ timeout: 20000 })
     .should("include", "/products");
@@ -15,12 +32,29 @@ When("realizar a busca pelo produto {string}", (produto) => {
     .type(produto);
 
   cy.get("#submit_search").click();
-});
 
-Then("o sistema deve exibir produtos relacionados", () => {
   cy.contains("Searched Products", { timeout: 20000 })
     .should("be.visible");
+});
 
-  cy.get(".productinfo", { timeout: 20000 })
+When("adicionar o produto ao carrinho", () => {
+  cy.get(".productinfo .add-to-cart", { timeout: 20000 })
+    .first()
+    .click();
+
+  cy.contains("Continue Shopping", { timeout: 20000 })
+    .should("be.visible")
+    .click();
+});
+
+When("acessar o carrinho", () => {
+  cy.contains("Cart", { timeout: 20000 }).click();
+});
+
+Then("o sistema deve exibir o produto no carrinho", () => {
+  cy.get(".cart_description", { timeout: 20000 })
+    .should("exist");
+
+  cy.get(".cart_description a")
     .should("have.length.greaterThan", 0);
 });

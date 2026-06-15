@@ -1,6 +1,8 @@
 Feature: Compra de produto
 
-  Scenario: Buscar produto no site
+  Scenario: Realizar fluxo de compra com sucesso
     Given que o usuário acessa o site Automation Exercise
     When realizar a busca pelo produto "T-Shirt"
-    Then o sistema deve exibir produtos relacionados
+    And adicionar o produto ao carrinho
+    And acessar o carrinho
+    Then o sistema deve exibir o produto no carrinho
